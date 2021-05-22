@@ -68,6 +68,15 @@ export type ActionType =
         col: string;
         heading: string;
       };
+    }
+  | {
+      type: "MOVE_NOTE";
+      payload: {
+        sourceId: string;
+        sourceNotes: Array<NoteType>;
+        targetId: string;
+        targetNotes: Array<NoteType>;
+      };
     };
 
 export const notesReducer: (
@@ -150,5 +159,21 @@ export const notesReducer: (
             }
           : column
       );
+    case "MOVE_NOTE":
+      return state.map((column) => {
+        if (column.id === action.payload.sourceId) {
+          return {
+            ...column,
+            notes: [...action.payload.sourceNotes],
+          };
+        }
+        if (column.id === action.payload.targetId) {
+          return {
+            ...column,
+            notes: [...action.payload.targetNotes],
+          };
+        }
+        return column;
+      });
   }
 };

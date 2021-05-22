@@ -1,5 +1,6 @@
 import { Button, InputBase } from "@material-ui/core";
 import React, { useRef } from "react";
+import { Droppable } from "react-beautiful-dnd";
 import { ColType, ActionType } from "../../App/AppState";
 import Note from "../Note/Note";
 import useStyles from "./Column.style";
@@ -33,11 +34,22 @@ const Column = ({ id, heading, notes, dispatch }: columnProps) => {
           inputRef={headingRef}
         />
       </form>
-      <div className={classes.notesContainer}>
-        {notes.map((note) => (
-          <Note {...note} colId={id} dispatch={dispatch} key={note.id} />
-        ))}
-      </div>
+      <Droppable droppableId={id}>
+        {(columnProvided, columnSnapshot) => (
+          <div className={classes.notesContainer} ref={columnProvided.innerRef}>
+            {notes.map((note, index) => (
+              <Note
+                {...note}
+                colId={id}
+                dispatch={dispatch}
+                key={note.id}
+                index={index}
+              />
+            ))}
+            {columnProvided.placeholder}
+          </div>
+        )}
+      </Droppable>
       <Button
         onClick={() => dispatch({ type: "ADD_NOTE", payload: { col: id } })}
       >

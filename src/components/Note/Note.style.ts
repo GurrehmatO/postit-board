@@ -18,6 +18,5 @@ export default makeStyles({
     color: "black",
     width: 20,
     height: 20,
-    // margin: 3,
   },
 });
