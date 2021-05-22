@@ -1,16 +1,18 @@
 import { Button, InputBase } from "@material-ui/core";
 import React, { useRef } from "react";
 import { ColType, ActionType } from "../../App/AppState";
-import Note from "../Note";
+import Note from "../Note/Note";
+import useStyles from "./Column.style";
 
 type columnProps = ColType & {
   dispatch: React.Dispatch<ActionType>;
 };
 const Column = ({ id, heading, notes, dispatch }: columnProps) => {
   const headingRef = useRef<HTMLInputElement>(null);
+  const classes = useStyles();
 
   return (
-    <div className="column">
+    <div className={classes.column}>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -27,11 +29,11 @@ const Column = ({ id, heading, notes, dispatch }: columnProps) => {
             });
           }}
           autoFocus={notes.length === 0}
-          className="col_heading"
+          className={classes.colHeading}
           inputRef={headingRef}
         />
       </form>
-      <div className="notes_container">
+      <div className={classes.notesContainer}>
         {notes.map((note) => (
           <Note {...note} colId={id} dispatch={dispatch} key={note.id} />
         ))}
