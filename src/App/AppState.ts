@@ -1,4 +1,6 @@
 import nextId from "react-id-generator";
+import colors from "../colors";
+import { getRandomInt } from "../utils";
 
 // export const ADD_COL: string = "ADD_COL";
 // export const DELETE_COL: string = "DELETE_COL";
@@ -13,6 +15,7 @@ export type NoteType = {
   id: string;
   heading: string;
   content: string;
+  color: string;
 };
 export type ColType = {
   id: string;
@@ -58,8 +61,9 @@ export type ActionType =
       payload: {
         col: string;
         note: string;
-        heading: string;
-        content: string;
+        heading?: string;
+        content?: string;
+        color?: string;
       };
     }
   | {
@@ -117,6 +121,10 @@ export const notesReducer: (
                   id: nextId("note"),
                   heading: "",
                   content: "",
+                  color:
+                    Object.keys(colors)[
+                      getRandomInt(0, Object.keys(colors).length)
+                    ],
                 },
               ],
             }
@@ -151,8 +159,15 @@ export const notesReducer: (
                 note.id === action.payload.note
                   ? {
                       ...note,
-                      heading: action.payload.heading,
-                      content: action.payload.content,
+                      ...(action.payload.heading && {
+                        heading: action.payload.heading,
+                      }),
+                      ...(action.payload.content && {
+                        content: action.payload.content,
+                      }),
+                      ...(action.payload.color && {
+                        color: action.payload.color,
+                      }),
                     }
                   : note
               ),

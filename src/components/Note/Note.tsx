@@ -1,9 +1,10 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { NoteType, ActionType } from "../../App/AppState";
 import { IconButton, InputBase, Paper } from "@material-ui/core";
 import useStyles from "./Note.style";
-import { Delete } from "@material-ui/icons";
+import { Delete, Brush } from "@material-ui/icons";
 import { Draggable } from "react-beautiful-dnd";
+import NoteThemer from "./NoteThemer";
 
 type NoteProps = NoteType & {
   dispatch: React.Dispatch<ActionType>;
@@ -11,9 +12,18 @@ type NoteProps = NoteType & {
   index: number;
 };
 
-const Note = ({ id, heading, content, dispatch, colId, index }: NoteProps) => {
+const Note = ({
+  id,
+  heading,
+  content,
+  color,
+  dispatch,
+  colId,
+  index,
+}: NoteProps) => {
   const contentRef = useRef<HTMLInputElement>(null);
   const classes = useStyles();
+  const [themerOpen, setThemerOpen] = useState<boolean>(false);
 
   return (
     <Draggable draggableId={id} index={index}>
@@ -35,6 +45,9 @@ const Note = ({ id, heading, content, dispatch, colId, index }: NoteProps) => {
             >
               <Delete className={classes.delete} />
             </IconButton>
+            <IconButton onClick={() => setThemerOpen(true)}>
+              <Brush className={classes.delete} />
+            </IconButton>
           </div>
           <div className={classes.noteMain}>
             <form
@@ -53,11 +66,11 @@ const Note = ({ id, heading, content, dispatch, colId, index }: NoteProps) => {
                       col: colId,
                       note: id,
                       heading: e.target.value,
-                      content,
                     },
                   });
                 }}
                 autoFocus
+                className={classes.noteHeading}
               />
             </form>
             <InputBase
@@ -70,14 +83,23 @@ const Note = ({ id, heading, content, dispatch, colId, index }: NoteProps) => {
                   payload: {
                     col: colId,
                     note: id,
-                    heading,
                     content: e.target.value,
                   },
                 })
               }
               placeholder="Take a note..."
+              className={classes.noteText}
             />
           </div>
+          <NoteThemer
+            color={color}
+            open={themerOpen}
+            setOpen={setThemerOpen}
+            colId={colId}
+            id={id}
+            dispatch={dispatch}
+            classes={classes}
+          />
         </Paper>
       )}
     </Draggable>

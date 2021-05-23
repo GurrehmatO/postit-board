@@ -1,9 +1,15 @@
-import { Button, InputBase } from "@material-ui/core";
+import {
+  Button,
+  createMuiTheme,
+  InputBase,
+  ThemeProvider,
+} from "@material-ui/core";
 import React, { useRef } from "react";
 import { Droppable } from "react-beautiful-dnd";
 import { ColType, ActionType } from "../../App/AppState";
 import Note from "../Note/Note";
 import useStyles from "./Column.style";
+import colors from "../../colors";
 
 type columnProps = ColType & {
   dispatch: React.Dispatch<ActionType>;
@@ -38,13 +44,17 @@ const Column = ({ id, heading, notes, dispatch }: columnProps) => {
         {(columnProvided, columnSnapshot) => (
           <div className={classes.notesContainer} ref={columnProvided.innerRef}>
             {notes.map((note, index) => (
-              <Note
-                {...note}
-                colId={id}
-                dispatch={dispatch}
+              <ThemeProvider
+                theme={createMuiTheme({
+                  palette: {
+                    // @ts-ignore
+                    primary: colors[note.color],
+                  },
+                })}
                 key={note.id}
-                index={index}
-              />
+              >
+                <Note {...note} colId={id} dispatch={dispatch} index={index} />
+              </ThemeProvider>
             ))}
             {columnProvided.placeholder}
           </div>
