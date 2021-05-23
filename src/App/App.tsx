@@ -1,4 +1,3 @@
-// import { Button } from "@material-ui/core";
 import React, { useEffect, useReducer } from "react";
 import Column from "../components/Column/Column";
 import { initialState, notesReducer } from "./AppState";
@@ -8,8 +7,15 @@ import useStyles from "./App.style";
 import { reorder, move } from "../utils";
 
 const App = () => {
-  const [columns, dispatch] = useReducer(notesReducer, initialState);
+  const savedState = localStorage.getItem("saved_notes");
+  const [columns, dispatch] = useReducer(
+    notesReducer,
+    savedState ? JSON.parse(savedState) : initialState
+  );
   const classes = useStyles();
+  useEffect(() => {
+    localStorage.setItem("saved_notes", JSON.stringify(columns));
+  }, [columns]);
 
   useEffect(() => {
     if (columns.length === 0) {
