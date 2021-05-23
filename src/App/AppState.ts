@@ -159,10 +159,10 @@ export const notesReducer: (
                 note.id === action.payload.note
                   ? {
                       ...note,
-                      ...(action.payload.heading && {
+                      ...(typeof action.payload.heading === typeof "" && {
                         heading: action.payload.heading,
                       }),
-                      ...(action.payload.content && {
+                      ...(typeof action.payload.content === typeof "" && {
                         content: action.payload.content,
                       }),
                       ...(action.payload.color && {
