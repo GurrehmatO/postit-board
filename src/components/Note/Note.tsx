@@ -69,7 +69,6 @@ const Note = ({
                     },
                   });
                 }}
-                autoFocus
                 className={classes.noteHeading}
               />
             </form>

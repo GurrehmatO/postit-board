@@ -4,8 +4,9 @@ export default makeStyles((theme) => ({
   note: {
     border: "2px solid black",
     margin: 10,
-    maxWidth: 250,
+    width: "100%",
     background: theme.palette.primary.main,
+    alignSelf: "center",
   },
   titleBar: {
     width: "calc(100% + 2px)",

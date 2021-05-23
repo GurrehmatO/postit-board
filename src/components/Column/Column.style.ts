@@ -1,14 +1,21 @@
 import { makeStyles } from "@material-ui/core";
 
-export default makeStyles({
+export default makeStyles((theme) => ({
   column: {
-    maxWidth: "60%",
+    width: "100%",
     minHeight: "50vh",
+    minWidth: 272,
     padding: 20,
-    border: "2px solid #aaaaaa",
-    // borderLeft: "0",
-
-    flexGrow: 1,
+    maxHeight: "calc(100vh - 130px)",
+    overflowY: "scroll",
+    [theme.breakpoints.down("xs")]: {
+      maxWidth: "unset",
+      width: "calc(100% - 40px)",
+      maxHeight: "unset",
+      borderBottom: "2px solid #aaaaaa",
+    },
+    display: "flex",
+    flexDirection: "column",
   },
   colHeading: {
     fontWeight: "bold",
@@ -16,7 +23,11 @@ export default makeStyles({
   },
   notesContainer: {
     display: "flex",
+    width: "100%",
+    maxWidth: 300,
     flexDirection: "column",
-    // flexWrap: "wrap",
+    alignItems: "stretch",
+    alignSelf: "center",
+    minHeight: 40,
   },
-});
+}));

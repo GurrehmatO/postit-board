@@ -20,26 +20,35 @@ const Column = ({ id, heading, notes, dispatch }: columnProps) => {
 
   return (
     <div className={classes.column}>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          headingRef && headingRef?.current?.blur();
-        }}
-      >
-        <InputBase
-          value={heading}
-          placeholder={"Enter Column Heading..."}
-          onChange={(e) => {
-            dispatch({
-              type: "EDIT_COL_HEADING",
-              payload: { col: id, heading: e.target.value },
-            });
+      <div>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            headingRef && headingRef?.current?.blur();
           }}
-          autoFocus={notes.length === 0}
-          className={classes.colHeading}
-          inputRef={headingRef}
-        />
-      </form>
+        >
+          <InputBase
+            value={heading}
+            placeholder={"Enter Column Heading..."}
+            onChange={(e) => {
+              dispatch({
+                type: "EDIT_COL_HEADING",
+                payload: { col: id, heading: e.target.value },
+              });
+            }}
+            className={classes.colHeading}
+            inputRef={headingRef}
+          />
+        </form>
+        <Button
+          onClick={() => dispatch({ type: "ADD_NOTE", payload: { col: id } })}
+        >
+          Add Note
+        </Button>
+        <Button onClick={() => dispatch({ type: "DELETE_COL", payload: id })}>
+          Delete Column
+        </Button>
+      </div>
       <Droppable droppableId={id}>
         {(columnProvided, columnSnapshot) => (
           <div className={classes.notesContainer} ref={columnProvided.innerRef}>
@@ -60,14 +69,6 @@ const Column = ({ id, heading, notes, dispatch }: columnProps) => {
           </div>
         )}
       </Droppable>
-      <Button
-        onClick={() => dispatch({ type: "ADD_NOTE", payload: { col: id } })}
-      >
-        Add Note
-      </Button>
-      <Button onClick={() => dispatch({ type: "DELETE_COL", payload: id })}>
-        Delete Column
-      </Button>
     </div>
   );
 };

@@ -1,16 +1,26 @@
 import React, { useEffect, useReducer } from "react";
 import Column from "../components/Column/Column";
-import { initialState, notesReducer } from "./AppState";
-import { Button, Typography } from "@material-ui/core";
+import { ColType, initialState, notesReducer } from "./AppState";
+import { AppBar, Button, Typography } from "@material-ui/core";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import useStyles from "./App.style";
 import { reorder, move } from "../utils";
+import nextId from "react-id-generator";
 
 const App = () => {
   const savedState = localStorage.getItem("saved_notes");
   const [columns, dispatch] = useReducer(
     notesReducer,
-    savedState ? JSON.parse(savedState) : initialState
+    savedState
+      ? JSON.parse(savedState).map((col: ColType) => ({
+          ...col,
+          id: nextId("col"),
+          notes: col.notes.map((note) => ({
+            ...note,
+            id: nextId("note"),
+          })),
+        }))
+      : initialState
   );
   const classes = useStyles();
   useEffect(() => {
@@ -67,15 +77,21 @@ const App = () => {
 
   return (
     <div className={classes.app}>
-      <Typography className={classes.appTitle}>POSTIT BOARD</Typography>
-      <div className={classes.colContainer}>
-        <DragDropContext onDragEnd={onDragEnd}>
-          {columns.map((column) => (
-            <Column dispatch={dispatch} {...column} key={column.id} />
-          ))}
-        </DragDropContext>
+      <AppBar position="sticky" className={classes.appTitle}>
+        <Typography>POSTIT BOARD</Typography>
+      </AppBar>
+      <div className={classes.columnAndButton}>
+        <div className={classes.colContainer}>
+          <DragDropContext onDragEnd={onDragEnd}>
+            {columns.map((column) => (
+              <Column dispatch={dispatch} {...column} key={column.id} />
+            ))}
+          </DragDropContext>
+        </div>
+        <Button onClick={() => dispatch({ type: "ADD_COL" })}>
+          add column
+        </Button>
       </div>
-      <Button onClick={() => dispatch({ type: "ADD_COL" })}>add column</Button>
     </div>
   );
 };
