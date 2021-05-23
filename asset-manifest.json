@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/postit-board/static/css/main.6dea0f05.chunk.css",
+    "main.js": "/postit-board/static/js/main.ed733601.chunk.js",
+    "main.js.map": "/postit-board/static/js/main.ed733601.chunk.js.map",
+    "runtime-main.js": "/postit-board/static/js/runtime-main.14b020e8.js",
+    "runtime-main.js.map": "/postit-board/static/js/runtime-main.14b020e8.js.map",
+    "static/js/2.74e79fdc.chunk.js": "/postit-board/static/js/2.74e79fdc.chunk.js",
+    "static/js/2.74e79fdc.chunk.js.map": "/postit-board/static/js/2.74e79fdc.chunk.js.map",
+    "static/js/3.41e50de8.chunk.js": "/postit-board/static/js/3.41e50de8.chunk.js",
+    "static/js/3.41e50de8.chunk.js.map": "/postit-board/static/js/3.41e50de8.chunk.js.map",
+    "index.html": "/postit-board/index.html",
+    "static/css/main.6dea0f05.chunk.css.map": "/postit-board/static/css/main.6dea0f05.chunk.css.map",
+    "static/js/2.74e79fdc.chunk.js.LICENSE.txt": "/postit-board/static/js/2.74e79fdc.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.14b020e8.js",
+    "static/js/2.74e79fdc.chunk.js",
+    "static/css/main.6dea0f05.chunk.css",
+    "static/js/main.ed733601.chunk.js"
+  ]
+}
